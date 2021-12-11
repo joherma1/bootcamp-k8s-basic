@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ratings
+  namespace: bookinfo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /ratings/$1
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "*.elb.eu-west-3.amazonaws.com"
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ratings
+                port:
+                  number: 9080
+

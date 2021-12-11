@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: productpage
+  namespace: bookinfo
+  annotations:
+    nginx.ingress.kubernetes.io/app-root: /productpage
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "*.elb.eu-west-3.amazonaws.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: productpage
+                port:
+                  number: 9080
+
